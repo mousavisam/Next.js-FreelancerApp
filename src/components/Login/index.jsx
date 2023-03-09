@@ -1,30 +1,84 @@
-import { Flex, Heading, Button, Input } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
-export const Login = ({ onSubmit, emailRef, passwordRef }) => {
+export const Login = () => {
   return (
-    <Flex height="100vh" alignItems="center" justifyContent="center">
-      <Flex direction="column" background="gray.100" p={12} rounded={6}>
-        <form onSubmit={onSubmit}>
-          <Heading mb={6}>Log in</Heading>
-          <Input
-            mb={3}
-            ref={emailRef}
-            placeholder="admin@gmail.com"
-            variant="filled"
-            type="email"
-          />
-          <Input
-            mb={3}
-            ref={passwordRef}
-            placeholder="*******"
-            variant="filled"
-            type="password"
-          />
-          <Button colorScheme="teal" type="submit">
-            Login
-          </Button>
-        </form>
-      </Flex>
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
+            to enjoy all of our cool{" "}
+            <Link style={{ color: "#4299e1" }} href="/login">
+              features
+            </Link>{" "}
+            ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+        >
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <Stack spacing={10}>
+              <Stack
+                direction={{ base: "column", sm: "row" }}
+                align={"start"}
+                justify={"space-between"}
+              >
+                <Checkbox>Remember me</Checkbox>
+                <Link style={{ color: "#4299e1" }} href="/login">
+                  Forgot password?
+                </Link>
+              </Stack>
+              <Button
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+              >
+                Sign in
+              </Button>
+            </Stack>
+            <Stack pt={6}>
+              <Text align={"center"}>
+                Don't have an account yet?{" "}
+                <Link href="/register" style={{ color: "#4299e1" }}>
+                  Register
+                </Link>
+              </Text>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
     </Flex>
   );
 };
