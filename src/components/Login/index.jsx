@@ -70,7 +70,7 @@ export const Login = () => {
             </Stack>
             <Stack pt={6}>
               <Text align={"center"}>
-                Don't have an account yet?{" "}
+                Don&apos;t have an account yet?{" "}
                 <Link href="/register" style={{ color: "#4299e1" }}>
                   Register
                 </Link>
