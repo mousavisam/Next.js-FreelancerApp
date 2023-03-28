@@ -13,7 +13,7 @@ export const Faq = () => {
       >
         <GridItem pl="2" area={"main"}>
           <Text as="b" fontSize="50px" color="black">
-            FAQ'S
+            {"FAQ'S"}
           </Text>
 
           <Box h="450px" w="900px" border="1px" borderColor="black"></Box>

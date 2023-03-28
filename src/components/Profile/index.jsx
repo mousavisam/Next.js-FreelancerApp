@@ -24,17 +24,7 @@ import { useState } from "react";
 
 export const Profile = () => {
   return (
-    <Grid
-      templateAreas={`"header header"
-                  "main main"
-                  `}
-      gridTemplateRows={"150px 1fr 30px"}
-      gridTemplateColumns={"150px 1fr"}
-      h="100vh"
-      gap="6"
-      color="blackAlpha.700"
-      fontWeight="bold"
-    >
+    <Grid color="blackAlpha.700" fontWeight="bold">
       <GridItem pl="2" area={"main"}>
         <Text as="b" fontSize="30px">
           My Profile
@@ -46,7 +36,7 @@ export const Profile = () => {
             border="2px"
             borderColor="black"
           ></WrapItem>
-          <WrapItem w="400px" h="500px" border="2px" borderColor="black">
+          <WrapItem w="400px" h="500px" border="2px" borderColor="black" position="relative">
             <Text fontSize="25px" as="b">
               Skills
             </Text>
