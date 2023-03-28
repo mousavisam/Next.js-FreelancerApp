@@ -5,3 +5,4 @@ export * from "./Dashboard";
 export * from "./Profile";
 export * from "./Header";
 export * from "./Project";
+export * from "./Faq";
