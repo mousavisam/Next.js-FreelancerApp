@@ -5,6 +5,7 @@ import {
   Center,
   Text,
   Input,
+  Button,
   Select,
 } from "@chakra-ui/react";
 
@@ -67,6 +68,17 @@ export const Project = () => {
               <option value="option3">Option 3</option>
             </Select>
           </Text>
+          <Button
+          size="md"
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              borderColor: "black",
+            }}
+            variant="outline"
+          >
+            Post Project
+          </Button>
         </Box>
       </Center>
     </VStack>
