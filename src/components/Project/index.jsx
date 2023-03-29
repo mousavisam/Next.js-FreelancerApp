@@ -5,6 +5,7 @@ import {
   Center,
   Text,
   Input,
+  Link,
   Button,
 
   Select,
@@ -12,19 +13,21 @@ import {
 
 export const Project = () => {
   return (
+    
     <VStack spacing={4} align="stretch">
       <Box h="60px">
         <Box w="90px" h="50px">
           <Center h="60px">
-            <Text as="b" fontSize={{ base: "md", lg: "lg" }}>
-              Skill Tree
-            </Text>
+          <Button position="relative" font-weight="bold" left="100px" colorScheme="blue" variant="link"fontSize="20px" w="120px" flex="10%" as={Link}
+           href="/dashboard">
+    <p font-weight="bold">Skill Tree</p>
+  </Button>
           </Center>
         </Box>
       </Box>
-      <Box h="50px"as="b" fontSize={{ base: "lg", lg: "lg" }} style={{ backgroundColor: "#63B3ED", color: "black" }}>
+      <Box h="50px"as="b" fontSize={{ base: "lg", lg: "lg" }} style={{ backgroundColor: "#C6F6D5", color: "black" }}>
         
-        Tell us about your project
+        <Text  position="relative" left="100px">Tell us about your project</Text> 
       </Box>
       <Center>
         <Box h="600px" w="1000px">
