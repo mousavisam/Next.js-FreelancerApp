@@ -6,6 +6,10 @@ import {
   Button,
   Avatar,
   Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
   Text,
   AbsoluteCenter,
   Menu,
@@ -50,9 +54,11 @@ export const Header = () => {
       <Box
         style={{ display: "flex", alignItems: "center", padding: "3px 15px" }}
       >
-        <Text as="b" fontSize="20px" w="120px" flex="10%">
-          Skill Tree
-        </Text>
+        <Button colorScheme="blue" variant="link"fontSize="20px" w="120px" flex="10%" as={Link}
+           href="/dashboard">
+    Skill Tree
+  </Button>
+       
         <ButtonGroup
           size="md"
           isAttached
@@ -94,15 +100,14 @@ export const Header = () => {
             fontSize="30px"
             icon={<EmailIcon />}
           />
+          <Button 
+          colorScheme="blue"
+          as={Link}
+            href="/project">
+              Post Project
+              </Button>
 
-          <Button
-            variant="md"
-            as={Link}
-            href="/project"
-            style={{ backgroundColor: "black", color: "#FAFAFA" }}
-          >
-            Post Project
-          </Button>
+          
 
           <IconButton
             style={{ background: "white", color: "grey" }}
@@ -111,9 +116,9 @@ export const Header = () => {
 
           <Menu style={{ overflow: "hidden" }}>
             <MenuButton
-              variant="md"
+              
               as={Button}
-              style={{ backgroundColor: "black", color: "#FAFAFA" }}
+              colorScheme="blue"
             >
               Username
             </MenuButton>
@@ -144,7 +149,7 @@ export const Header = () => {
       </Box>
       <Box
         style={{
-          backgroundColor: "black",
+          backgroundColor: "#C6F6D5",
           padding: "5px 10px",
           margin: 0,
           display: "flex",
@@ -158,32 +163,32 @@ export const Header = () => {
           variant="outline"
           style={{ outlineColor: "black", width: "70%" }}
         >
-          <Button
-            style={{
-              backgroundColor: "black",
-              color: "white",
-            }}
-          >
-            Dashboard
+                 
+          <Button 
+          as={Link}
+           href="/dashboard"
+          colorScheme="blue"
+          onClick={() => {}}
+          >Dashboard
           </Button>
-          <Button style={{ backgroundColor: "black", color: "white" }}>
+          <Button colorScheme="blue">
             Lists
           </Button>
           <Button
             //   as={Link}
             //   href="/project"
-            style={{ backgroundColor: "black", color: "white" }}
+            colorScheme="blue"
             //   onClick={() => {}}
           >
             Task Lists
           </Button>
-          <Button style={{ backgroundColor: "black", color: "white" }}>
+          <Button colorScheme="blue">
             My Project
           </Button>
-          <Button style={{ backgroundColor: "black", color: "white" }}>
+          <Button colorScheme="blue">
             Feedback
           </Button>
-          <Button style={{ backgroundColor: "black", color: "white" }}>
+          <Button colorScheme="blue">
             Inbox
           </Button>
         </ButtonGroup>
