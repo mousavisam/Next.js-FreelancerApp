@@ -30,8 +30,17 @@ import {
   StarIcon,
 } from "@chakra-ui/icons";
 import Link from "next/link";
+import { clearStorage } from "@/utils/storage";
+import { useRouter } from "next/router";
 
 export const Header = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    clearStorage();
+    router.replace("/");
+  };
+
   return (
     <Stack>
       <Box
@@ -120,7 +129,7 @@ export const Header = () => {
                 <SettingsIcon />
                 Settings
               </MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </Box>

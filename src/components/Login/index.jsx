@@ -10,10 +10,70 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  InputRightElement,
+  InputGroup,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { userApi } from "@/services";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useDispatch } from "react-redux";
+
+import { setUser } from "../../store/reducers/userSlice";
+import { setStorageToken } from "@/utils/storage";
+import { useRouter } from "next/router";
+
+const schema = yup
+  .object()
+  .shape({
+    username: yup
+      .string()
+      .min(4)
+      .matches(/^[a-zA-Z0-9_]{3,}[a-zA-Z]+[0-9]*$/, "username is not valid"),
+    password: yup.string().min(6).required(),
+  })
+  .required();
+
 export const Login = () => {
+  const toast = useToast();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (values) => {
+    userApi
+      .login(values)
+      .then((res) => {
+        console.info({ res });
+        const { access_token, refresh_token } = res?.data;
+        dispatch(
+          setUser({ username: values.username, access_token, refresh_token })
+        );
+        setStorageToken(access_token);
+        router.push("/profile");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({
+          title: "Error!",
+          description: "Something went wrong, please try again!",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  };
+
   return (
     <Flex
       minH={"100vh"}
@@ -37,15 +97,32 @@ export const Login = () => {
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
           p={8}
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+            <FormControl id="username" isRequired isInvalid={errors.username}>
+              <FormLabel>Username</FormLabel>
+              <Input type="text" {...register("username")} />
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={errors.password} isRequired>
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                />
+                <InputRightElement h={"full"}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }
+                  >
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -59,11 +136,15 @@ export const Login = () => {
                 </Link>
               </Stack>
               <Button
+                loadingText="Submitting"
+                size="lg"
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
                 }}
+                isLoading={isSubmitting}
+                type="submit"
               >
                 Sign in
               </Button>

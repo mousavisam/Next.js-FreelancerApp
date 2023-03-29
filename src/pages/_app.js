@@ -2,7 +2,10 @@ import { Header } from "@/components";
 import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Dashboard from "./dashboard";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { store, persistor } from "../store/configureStore";
 
 const headerComponents = ["Faq", "Profile"];
 
@@ -22,10 +25,14 @@ export default function App({ Component, pageProps }) {
       }}
     >
       {domLoaded && (
-        <ChakraProvider>
-          {headerComponents.includes(Component.name) && <Header />}
-          <Component {...pageProps} />
-        </ChakraProvider>
+        <Provider store={store}>
+          <PersistGate persistor={persistor} loading={null}>
+            <ChakraProvider>
+              {headerComponents.includes(Component.name) && <Header />}
+              <Component {...pageProps} />
+            </ChakraProvider>
+          </PersistGate>
+        </Provider>
       )}
     </div>
   );

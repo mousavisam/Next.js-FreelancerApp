@@ -1,3 +1,4 @@
+import { certificateApi, userApi } from "@/services";
 import {
   Grid,
   Box,
@@ -13,7 +14,7 @@ import {
   CardBody,
   Table,
   BillingRow,
-  billingData ,
+  billingData,
   Thead,
   Tbody,
   Tfoot,
@@ -35,114 +36,129 @@ import {
   Badge,
   Flex,
   Avatar,
-} 
-from "@chakra-ui/react";
-import { useState } from "react";
+} from "@chakra-ui/react";
+import { isEmpty } from "lodash";
+import { useCallback, useEffect, useState } from "react";
+import { AddCertificate } from "./components/AddCertificate";
 
 export const Profile = () => {
+  const [userData, setUserData] = useState({});
+  const [certificates, setCertificates] = useState([]);
+
+  const handleGetProfile = useCallback(() => {
+    userApi.profile().then((res) => {
+      setUserData(res?.data || {});
+    });
+  }, []);
+
+  const handleGetCertificates = useCallback(() => {
+    certificateApi.get().then((res) => {
+      console.info({ res });
+      setCertificates(res?.data || []);
+    });
+  }, []);
+
+  useEffect(() => {
+    handleGetProfile();
+  }, [handleGetProfile]);
+
+  useEffect(() => {
+    handleGetCertificates();
+  }, [handleGetCertificates]);
+
+  if (isEmpty(userData)) return <div />;
+
   return (
     <Card p="1rem" my={{ sm: "24px", xl: "0px" }}>
-    <CardHeader p="12px 5px" mb="12px">
-      <Text fontSize="md" color="#63B3ED" fontWeight="bold">
-        Profile Information
-      </Text>
-      <br></br>
-      <Flex>
-        <Avatar src="" />
-        <Box ml="3">
-          <Text fontWeight="bold">
-            Fred Michael
-            <Badge ml="1" colorScheme="green">
-              Online
-            </Badge>
-          </Text>
-          <Text fontSize="sm">UI Engineer</Text>
-        </Box>
-        </Flex>
-    </CardHeader>
-    <CardBody p="0px 5px">
-      <Flex direction="column">
-        <Text fontSize="md" color="gray.500" fontWeight="400" mb="30px">
-          Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer is
-          no. If two equally difficult paths, choose the one more painful in the
-          short term (pain avoidance is creating an illusion of equality).
+      <CardHeader p="12px 5px" mb="12px">
+        <Text fontSize="md" color="#63B3ED" fontWeight="bold">
+          Profile Information
         </Text>
-        <Flex alignItems="center" mb="18px">
-          <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
-            Full Name:{" "}
-          </Text>
-          <Text fontSize="md" color="gray.500" fontWeight="400">
-            Esthera Jackson
-          </Text>
+        <br></br>
+        <Flex>
+          <Avatar src="" />
+          <Box ml="3">
+            <Text fontWeight="bold">
+              {`${userData.first_name} ${userData.last_name}`}
+              <Badge ml="1" colorScheme="green">
+                Online
+              </Badge>
+            </Text>
+            <Text fontSize="sm">UI Engineer</Text>
+          </Box>
         </Flex>
-        <Flex alignItems="center" mb="18px">
-          <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
-            Mobile:{" "}
+      </CardHeader>
+      <CardBody p="0px 5px">
+        <Flex direction="column">
+          <Text fontSize="md" color="gray.500" fontWeight="400" mb="30px">
+            Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer
+            is no. If two equally difficult paths, choose the one more painful
+            in the short term (pain avoidance is creating an illusion of
+            equality).
           </Text>
-          <Text fontSize="md" color="gray.500" fontWeight="400">
-            (44) 123 1234 123
-          </Text>
+          <Flex alignItems="center" mb="18px">
+            <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
+              Full Name:{" "}
+            </Text>
+            <Text fontSize="md" color="gray.500" fontWeight="400">
+              {`${userData.first_name} ${userData.last_name}`}
+            </Text>
+          </Flex>
+          <Flex alignItems="center" mb="18px">
+            <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
+              Username:{" "}
+            </Text>
+            <Text fontSize="md" color="gray.500" fontWeight="400">
+              {userData.username}
+            </Text>
+          </Flex>
+          <Flex alignItems="center" mb="18px">
+            <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
+              Email:{" "}
+            </Text>
+            <Text fontSize="md" color="gray.500" fontWeight="400">
+              {userData.email}
+            </Text>
+          </Flex>
+          <Flex alignItems="center" mb="18px">
+            <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
+              Location:{" "}
+            </Text>
+            <Text fontSize="md" color="gray.500" fontWeight="400">
+              United States
+            </Text>
+          </Flex>
+          <Box></Box>
+          <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="lg">
+            <Heading fontSize="xl">Skills</Heading>
+            <Text mt={4}>Python</Text>
+            <Text mt={4}>java</Text>
+          </Box>
+          <br></br>
+          <ButtonGroup variant="outline" spacing="6">
+            <Button colorScheme="blue">Add Skills</Button>
+          </ButtonGroup>
+          <br></br>
+          <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
+            <Heading fontSize="xl">Certifications</Heading>
+            {certificates.map((certificate) => (
+              <Link
+                display="block"
+                target="_blank"
+                colorScheme="blue"
+                href={certificate.link}
+                key={certificate.earned_date + certificate.title}
+              >
+                {certificate.title}
+              </Link>
+            ))}
+          </Box>
+          <br></br>
+          <ButtonGroup variant="outline" spacing="6">
+            <AddCertificate callback={handleGetCertificates}/>
+          </ButtonGroup>
         </Flex>
-        <Flex alignItems="center" mb="18px">
-          <Text fontSize="md" color="#63B3ED" fontWeight="bold" me="10px">
-            Email:{" "}
-          </Text>
-          <Text fontSize="md" color="gray.500" fontWeight="400">
-            esthera@simmmple.com
-          </Text>
-        </Flex>
-        <Flex alignItems="center" mb="18px">
-          <Text fontSize="md" color="#63B3ED"fontWeight="bold" me="10px">
-            Location:{" "}
-          </Text>
-          <Text fontSize="md" color="gray.500" fontWeight="400">
-            United States
-          </Text>
-        </Flex>
-        <Box>
-   
-   </Box>
-   <Box
-      p={5}
-      shadow="md"
-      borderWidth="1px"
-      flex="1"
-      borderRadius="lg"
-    
-    >
-      <Heading fontSize="xl">Skills</Heading>
-      <Text mt={4}>Python</Text>
-      <Text mt={4}>java</Text>
-    </Box>
-    <br></br>
-     <ButtonGroup variant="outline" spacing="6">
-       <Button colorScheme="blue">Add Skills</Button>
-     </ButtonGroup>
-<br></br>
-     <Box
-      p={5}
-      shadow="md"
-      borderWidth="1px"
-      flex="1"
-      borderRadius="md"
-      bjhb
-    >
-      <Heading fontSize="xl">Certifications</Heading>
-      <Text mt={4}>Google cloud certification</Text>
-      <Text mt={4}>AWS Certification</Text>
-    </Box>
-    <br>
-    </br>
-    <ButtonGroup variant="outline" spacing="6">
-  <Button colorScheme="blue">Add Certificate</Button>
-  </ButtonGroup>
-
- 
-        
-      </Flex>
-    </CardBody>
-  </Card>
-  
-  
+      </CardBody>
+    </Card>
   );
 };
