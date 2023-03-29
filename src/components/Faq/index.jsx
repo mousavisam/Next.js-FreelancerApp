@@ -16,7 +16,7 @@ export const Faq = () => {
             {"FAQ'S"}
           </Text>
 
-          <Box h="450px" w="900px" border="1px" borderColor="black"></Box>
+          <Box h="450px" w="900px" border="1px" borderColor="Black"></Box>
         </GridItem>
       </Grid>
     </>
