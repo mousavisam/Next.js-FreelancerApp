@@ -94,13 +94,16 @@ export const Header = () => {
           </Button>
         </ButtonGroup>
 
-        <Box style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        <Box 
+        style={{ display: "flex", alignItems: "center", gap: "5px" }}>
           <IconButton
+          position="relative" right="20px"
             style={{ background: "white", color: "grey" }}
             fontSize="30px"
             icon={<EmailIcon />}
           />
           <Button 
+          position="relative" right="20px"
           colorScheme="blue"
           as={Link}
             href="/project">
@@ -110,13 +113,15 @@ export const Header = () => {
           
 
           <IconButton
+          position="relative" right="20px"
             style={{ background: "white", color: "grey" }}
             icon={<Icon as={Avatar} fontSize="30px" />}
           />
 
           <Menu style={{ overflow: "hidden" }}>
             <MenuButton
-              
+              width={100}
+              position="relative" right="20px"
               as={Button}
               colorScheme="blue"
             >
