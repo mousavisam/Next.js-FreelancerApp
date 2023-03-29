@@ -29,8 +29,12 @@ import {
   SettingsIcon,
   StarIcon,
 } from "@chakra-ui/icons";
+//import Icon from "@mdi/react";
+import { mdiLogout } from "@mdi/js";
 import Link from "next/link";
 import { clearStorage } from "@/utils/storage";
+import { FiLogOut } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
 
 export const Header = () => {
@@ -114,7 +118,8 @@ export const Header = () => {
               Username
             </MenuButton>
             <MenuList>
-              <MenuItem as={Link} href="/profile">
+              <MenuItem gap="6px" as={Link} href="/profile">
+                <CgProfile />
                 View profile
               </MenuItem>
               <MenuItem gap="6px" as={Link} href="/faq">
@@ -129,7 +134,10 @@ export const Header = () => {
                 <SettingsIcon />
                 Settings
               </MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              <MenuItem gap="6px" onClick={handleLogout}>
+                <FiLogOut />
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </Box>

@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "../store/configureStore";
 
-const headerComponents = ["Faq", "Profile"];
+const headerComponents = ["Faq", "Profile", "Dashboard"];
 
 export default function App({ Component, pageProps }) {
   console.log(Component.name);
