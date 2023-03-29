@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   Wrap,
   WrapItem,
+ 
   Center,
   Card,
   CardBody,
@@ -70,12 +71,12 @@ export const Profile = () => {
 
   return (
     <Card p="1rem" my={{ sm: "24px", xl: "0px" }}>
-      <CardHeader p="12px 5px" mb="12px">
+      <CardHeader position="relative" left="400px" width="600px"  p="12px 5px" mb="12px">
         <Text fontSize="md" color="#63B3ED" fontWeight="bold">
           Profile Information
         </Text>
         <br></br>
-        <Flex>
+        <Flex >
           <Avatar src="" />
           <Box ml="3">
             <Text fontWeight="bold">
@@ -88,7 +89,7 @@ export const Profile = () => {
           </Box>
         </Flex>
       </CardHeader>
-      <CardBody p="0px 5px">
+      <CardBody position="relative" left="400px" width="600px" p="0px 5px">
         <Flex direction="column">
           <Text fontSize="md" color="gray.500" fontWeight="400" mb="30px">
             Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer
@@ -128,6 +129,10 @@ export const Profile = () => {
               United States
             </Text>
           </Flex>
+          <Button  width="70px" colorScheme="pink" variant="solid">
+    Edit
+  </Button>
+  <br></br>
           <Box></Box>
           <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="lg">
             <Heading fontSize="xl">Skills</Heading>
