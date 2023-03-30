@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import {
   VStack,
   Stack,
@@ -45,8 +46,10 @@ export const Header = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    clearStorage();
-    router.replace("/");
+    signOut().then(() => {
+      clearStorage();
+      router.replace("/");
+    });
   };
 
   return (
@@ -54,11 +57,18 @@ export const Header = () => {
       <Box
         style={{ display: "flex", alignItems: "center", padding: "3px 15px" }}
       >
-        <Button colorScheme="blue" variant="link"fontSize="20px" w="120px" flex="10%" as={Link}
-           href="/dashboard">
-    Skill Tree
-  </Button>
-       
+        <Button
+          colorScheme="blue"
+          variant="link"
+          fontSize="20px"
+          w="120px"
+          flex="10%"
+          as={Link}
+          href="/dashboard"
+        >
+          Skill Tree
+        </Button>
+
         <ButtonGroup
           size="md"
           isAttached
@@ -94,26 +104,27 @@ export const Header = () => {
           </Button>
         </ButtonGroup>
 
-        <Box 
-        style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        <Box style={{ display: "flex", alignItems: "center", gap: "5px" }}>
           <IconButton
-          position="relative" right="20px"
+            position="relative"
+            right="20px"
             style={{ background: "white", color: "grey" }}
             fontSize="30px"
             icon={<EmailIcon />}
           />
-          <Button 
-          position="relative" right="20px"
-          colorScheme="blue"
-          as={Link}
-            href="/project">
-              Post Project
-              </Button>
-
-          
+          <Button
+            position="relative"
+            right="20px"
+            colorScheme="blue"
+            as={Link}
+            href="/project"
+          >
+            Post Project
+          </Button>
 
           <IconButton
-          position="relative" right="20px"
+            position="relative"
+            right="20px"
             style={{ background: "white", color: "grey" }}
             icon={<Icon as={Avatar} fontSize="30px" />}
           />
@@ -121,7 +132,8 @@ export const Header = () => {
           <Menu style={{ overflow: "hidden" }}>
             <MenuButton
               width={100}
-              position="relative" right="20px"
+              position="relative"
+              right="20px"
               as={Button}
               colorScheme="blue"
             >
@@ -168,17 +180,15 @@ export const Header = () => {
           variant="outline"
           style={{ outlineColor: "black", width: "70%" }}
         >
-                 
-          <Button 
-          as={Link}
-           href="/dashboard"
-          colorScheme="blue"
-          onClick={() => {}}
-          >Dashboard
+          <Button
+            as={Link}
+            href="/dashboard"
+            colorScheme="blue"
+            onClick={() => {}}
+          >
+            Dashboard
           </Button>
-          <Button colorScheme="blue">
-            Lists
-          </Button>
+          <Button colorScheme="blue">Lists</Button>
           <Button
             //   as={Link}
             //   href="/project"
@@ -187,15 +197,9 @@ export const Header = () => {
           >
             Task Lists
           </Button>
-          <Button colorScheme="blue">
-            My Project
-          </Button>
-          <Button colorScheme="blue">
-            Feedback
-          </Button>
-          <Button colorScheme="blue">
-            Inbox
-          </Button>
+          <Button colorScheme="blue">My Project</Button>
+          <Button colorScheme="blue">Feedback</Button>
+          <Button colorScheme="blue">Inbox</Button>
         </ButtonGroup>
       </Box>
     </Stack>

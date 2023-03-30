@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../store/reducers/userSlice";
 import { setStorageToken } from "@/utils/storage";
 import { useRouter } from "next/router";
+import { ThirdPartyLogin } from "..";
 
 const schema = yup
   .object()
@@ -156,6 +157,9 @@ export const Login = () => {
                   Register
                 </Link>
               </Text>
+            </Stack>
+            <Stack pt={6}>
+              <ThirdPartyLogin />
             </Stack>
           </Stack>
         </Box>

@@ -27,6 +27,7 @@ import { useToast } from "@chakra-ui/react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userApi } from "@/services";
+import { ThirdPartyLogin } from "..";
 
 const schema = yup
   .object()
@@ -198,6 +199,9 @@ export const Register = () => {
                     Login
                   </Link>
                 </Text>
+              </Stack>
+              <Stack pt={6}>
+                <ThirdPartyLogin />
               </Stack>
             </Stack>
           </Box>

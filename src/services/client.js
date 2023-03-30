@@ -1,6 +1,5 @@
 import axios from "axios";
 import { isEmpty } from "lodash";
-import queryString from "query-string";
 
 import { getStorageToken } from "../utils/storage";
 

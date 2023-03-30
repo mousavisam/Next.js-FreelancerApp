@@ -1,4 +1,4 @@
-import { certificateApi, userApi } from "@/services";
+import { certificateApi, userApi, skillApi } from "@/services";
 import {
   Grid,
   Box,
@@ -9,7 +9,6 @@ import {
   ButtonGroup,
   Wrap,
   WrapItem,
- 
   Center,
   Card,
   CardBody,
@@ -41,10 +40,12 @@ import {
 import { isEmpty } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { AddCertificate } from "./components/AddCertificate";
+import { AddSkill } from "./components/AddSkill";
 
 export const Profile = () => {
   const [userData, setUserData] = useState({});
   const [certificates, setCertificates] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   const handleGetProfile = useCallback(() => {
     userApi.profile().then((res) => {
@@ -59,6 +60,12 @@ export const Profile = () => {
     });
   }, []);
 
+  const handleGetSkills = useCallback(() => {
+    skillApi.get().then((res) => {
+      setSkills(res?.data || []);
+    });
+  }, []);
+
   useEffect(() => {
     handleGetProfile();
   }, [handleGetProfile]);
@@ -67,16 +74,26 @@ export const Profile = () => {
     handleGetCertificates();
   }, [handleGetCertificates]);
 
+  useEffect(() => {
+    handleGetSkills();
+  }, [handleGetSkills]);
+
   if (isEmpty(userData)) return <div />;
 
   return (
     <Card p="1rem" my={{ sm: "24px", xl: "0px" }}>
-      <CardHeader position="relative" left="400px" width="600px"  p="12px 5px" mb="12px">
+      <CardHeader
+        position="relative"
+        left="400px"
+        width="600px"
+        p="12px 5px"
+        mb="12px"
+      >
         <Text fontSize="md" color="#63B3ED" fontWeight="bold">
           Profile Information
         </Text>
         <br></br>
-        <Flex >
+        <Flex>
           <Avatar src="" />
           <Box ml="3">
             <Text fontWeight="bold">
@@ -129,19 +146,22 @@ export const Profile = () => {
               United States
             </Text>
           </Flex>
-          <Button  width="70px" colorScheme="pink" variant="solid">
-    Edit
-  </Button>
-  <br></br>
+          <Button width="70px" colorScheme="pink" variant="solid">
+            Edit
+          </Button>
+          <br></br>
           <Box></Box>
           <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="lg">
             <Heading fontSize="xl">Skills</Heading>
-            <Text mt={4}>Python</Text>
-            <Text mt={4}>java</Text>
+            {skills.map((skill) => (
+              <Text key={skill.category} mt={4}>
+                {skill.category}
+              </Text>
+            ))}
           </Box>
           <br></br>
           <ButtonGroup variant="outline" spacing="6">
-            <Button colorScheme="blue">Add Skills</Button>
+            <AddSkill callback={handleGetSkills} />
           </ButtonGroup>
           <br></br>
           <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
@@ -160,7 +180,7 @@ export const Profile = () => {
           </Box>
           <br></br>
           <ButtonGroup variant="outline" spacing="6">
-            <AddCertificate callback={handleGetCertificates}/>
+            <AddCertificate callback={handleGetCertificates} />
           </ButtonGroup>
         </Flex>
       </CardBody>
