@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat Service</title>
+  <style>
+    #messages {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid black;
+      padding: 10px;
+    }
+    #input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+    #message-input {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+    #send-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="messages"></div>
+  <div id="input">
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <button id="send-button">Send</button>
+  </div>
+  <script>
+    const messagesDiv = document.getElementById("messages");
+    const messageInput = document.getElementById("message-input");
+    const sendButton = document.getElementById("send-button");
+    
+    sendButton.addEventListener("click", () => {
+      const message = messageInput.value;
+      if (message) {
+        const messageElement = document.createElement("div");
+        messageElement.innerText = message;
+        messagesDiv.appendChild(messageElement);
+        messageInput.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
