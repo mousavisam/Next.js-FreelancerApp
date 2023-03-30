@@ -1,11 +1,11 @@
 
-import { Dashboard as DashboardUI } from "../../components";
+import { AuthLayout, Dashboard as DashboardUI } from "../../components";
 
 const Dashboard = () => {
   return (
-    <>
+    <AuthLayout>
       <DashboardUI />
-    </>
+    </AuthLayout>
   );
 };
 

@@ -1,10 +1,10 @@
-import { Faq as FaqUI } from "../../components";
+import { AuthLayout, Faq as FaqUI } from "../../components";
 
 const Faq = () => {
   return (
-    <>
+    <AuthLayout>
       <FaqUI />
-    </>
+    </AuthLayout>
   );
 };
 

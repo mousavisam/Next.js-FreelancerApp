@@ -1,4 +1,3 @@
-import { Header } from "@/components";
 import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -7,8 +6,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "next-auth/react";
 
 import { store, persistor } from "../store/configureStore";
-
-const headerComponents = ["Faq", "Profile", "Dashboard"];
 
 export default function App({
   Component,
@@ -33,7 +30,6 @@ export default function App({
           <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
               <ChakraProvider>
-                {headerComponents.includes(Component.name) && <Header />}
                 <Component {...pageProps} />
               </ChakraProvider>
             </PersistGate>

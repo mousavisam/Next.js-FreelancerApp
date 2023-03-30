@@ -7,3 +7,4 @@ export * from "./Header";
 export * from "./Project";
 export * from "./Faq";
 export * from "./ThirdPartyLogin";
+export * from "./AuthLayout";

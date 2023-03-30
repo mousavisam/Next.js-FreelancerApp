@@ -1,6 +1,6 @@
 import { userApi } from "@/services";
 import { setUser } from "@/store/reducers/userSlice";
-import { setStorageToken } from "@/utils/storage";
+import { clearStorage, setStorageToken } from "@/utils/storage";
 import { Button, Center, Text, useToast } from "@chakra-ui/react";
 import { useSession, signIn, signOut, getProviders } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -83,6 +83,8 @@ export const ThirdPartyLogin = ({ onHasData, onLoading, onSelectType }) => {
             duration: 9000,
             isClosable: true,
           });
+          signOut();
+          clearStorage();
         })
         .finally(() => {
           onLoading(false);
@@ -99,7 +101,7 @@ export const ThirdPartyLogin = ({ onHasData, onLoading, onSelectType }) => {
       onLoading(false);
       onHasData(false);
     }
-  }, [data, onLoading, onHasData, handleGetLoginData]);
+  }, [data, onLoading, signOut, onHasData, handleGetLoginData]);
 
   useEffect(() => {
     handleGetProviders();
