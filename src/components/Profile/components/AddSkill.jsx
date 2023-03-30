@@ -4,6 +4,11 @@ import {
   FormLabel,
   Input,
   Modal,
+  Drawer,
+  IconButton,
+  DrawerOverlay,
+  DrawerHeader,
+  DrawerBody,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -21,6 +26,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { skillApi } from "@/services";
 
 const schema = yup
+
   .object()
   .shape({
     skill_name: yup.string().required(),
@@ -77,12 +83,23 @@ export const AddSkill = ({ callback }) => {
           <ModalHeader>Add Skill</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+          <FormControl
+              mt={4}
+              id="Search"
+              isInvalid={errors.skill_name}
+            >          
+              <FormLabel>Search</FormLabel>
+              <Input placeholder="Search"  />
+              
+            </FormControl>
+
+
             <FormControl
               mt={4}
               id="skill_name"
               isRequired
               isInvalid={errors.skill_name}
-            >
+            >          
               <FormLabel>Skill Name</FormLabel>
               <Input placeholder="Skill Name" {...register("skill_name")} />
             </FormControl>
