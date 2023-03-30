@@ -17,12 +17,14 @@ import {
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
+import Select from "react-select";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {  taskApi } from "@/services";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { categoryApi, taskApi } from "@/services";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { isEmpty } from "lodash";
 
 const schema = yup
   .object()
@@ -30,22 +32,31 @@ const schema = yup
     title: yup.string().required(),
     deliver_time: yup.string().required(),
     description: yup.string().required(),
-    service_category: yup.string().required(),
+    service_category: yup.object().required(),
   })
   .required();
 
 export const Project = () => {
   const toast = useToast();
+  const [categories, setCategories] = useState([]);
   const [isAdded, setIsAdded] = useState(false);
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
 
+  const handleGetCategories = useCallback(() => {
+    categoryApi.getAll().then((res) => {
+      console.info({ res });
+      setCategories(res?.data || []);
+    });
+  }, []);
+
   const onSubmit = (values) => {
     taskApi
-      .post(values)
+      .post({ ...values, service_category: values.service_category.value })
       .then((res) => {
         setIsAdded(true);
       })
@@ -60,6 +71,10 @@ export const Project = () => {
         });
       });
   };
+
+  useEffect(() => {
+    handleGetCategories();
+  }, [handleGetCategories]);
 
   return (
     <VStack spacing={4} align="stretch">
@@ -148,11 +163,27 @@ export const Project = () => {
               </FormControl>
               <FormControl
                 id="service_category"
-                isRequired
                 isInvalid={errors.service_category}
+                isRequired
               >
                 <FormLabel>Service Category</FormLabel>
-                <Input type="text" {...register("service_category")} />
+
+                <Controller
+                  name="service_category"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      options={categories.map((item) => ({
+                        value: item.title,
+                        label: item.title,
+                      }))}
+                      isLoading={isEmpty(categories)}
+                      placeholder="Service Category"
+                      {...field}
+                    />
+                  )}
+                />
               </FormControl>
 
               <Stack spacing={10} pt={2}>

@@ -1,4 +1,4 @@
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   VStack,
   Stack,
@@ -7,7 +7,6 @@ import {
   Button,
   Avatar,
   Box,
-
   Menu,
   Drawer,
   useDisclosure,
@@ -50,12 +49,18 @@ import React from "react";
 
 export const Header = () => {
   const router = useRouter();
+  const { data: socialData } = useSession();
 
   const handleLogout = () => {
-    signOut().then(() => {
+    if (socialData) {
+      signOut().then(() => {
+        clearStorage();
+        router.push("/login");
+      });
+    } else {
       clearStorage();
-      router.replace("/");
-    });
+      router.push("/login");
+    }
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = React.useState("top");
@@ -93,13 +98,11 @@ export const Header = () => {
             Browser
           </Button>
           <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay/>
-            <DrawerContent >
-              <DrawerBody >
-                <DrawerBody >
-                  
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerBody>
+                <DrawerBody>
                   <Input placeholder="Search" />
-           
                 </DrawerBody>
               </DrawerBody>
             </DrawerContent>
@@ -123,17 +126,16 @@ export const Header = () => {
             Group
           </Button>
         </ButtonGroup>
-        
 
         <Box style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-         <IconButton
-         position="relative"
-         right="20px"
-  variant="outline"
-  colorScheme="blue"
-  aria-label="Message"
-  icon={<ChatIcon />}
-/>
+          <IconButton
+            position="relative"
+            right="20px"
+            variant="outline"
+            colorScheme="blue"
+            aria-label="Message"
+            icon={<ChatIcon />}
+          />
           <Button
             position="relative"
             right="20px"
@@ -143,7 +145,6 @@ export const Header = () => {
           >
             Post Project
           </Button>
-   
 
           <IconButton
             position="relative"

@@ -28,6 +28,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userApi } from "@/services";
 import { ThirdPartyLogin } from "..";
+import { TypeSelector } from "./components/TypeSelector";
 
 const schema = yup
   .object()
@@ -46,8 +47,11 @@ const schema = yup
 
 export const Register = () => {
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSocialData, setHasSocialData] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [selectUserType, setSelectUserType] = useState(false);
   const {
     handleSubmit,
     register,
@@ -72,6 +76,38 @@ export const Register = () => {
         });
       });
   };
+
+  if (isLoading || hasSocialData) {
+    return (
+      <Flex
+        minH={"100vh"}
+        align={"center"}
+        justify={"center"}
+        bg={useColorModeValue("gray.50", "gray.800")}
+      >
+        <Alert
+          status="info"
+          variant="subtle"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          height="200px"
+          maxW={"lg"}
+        >
+          <AlertIcon boxSize="40px" mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize="lg">
+            You are in process of login with Google
+          </AlertTitle>
+          <AlertDescription maxWidth="sm">Please wait...</AlertDescription>
+        </Alert>
+      </Flex>
+    );
+  }
+
+  if (selectUserType) {
+    return <TypeSelector />;
+  }
 
   return (
     <Flex
@@ -201,7 +237,11 @@ export const Register = () => {
                 </Text>
               </Stack>
               <Stack pt={6}>
-                <ThirdPartyLogin />
+                <ThirdPartyLogin
+                  onLoading={setIsLoading}
+                  onHasData={setHasSocialData}
+                  onSelectType={setSelectUserType}
+                />
               </Stack>
             </Stack>
           </Box>

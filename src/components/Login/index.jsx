@@ -13,6 +13,10 @@ import {
   InputRightElement,
   InputGroup,
   useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -28,6 +32,7 @@ import { setUser } from "../../store/reducers/userSlice";
 import { setStorageToken } from "@/utils/storage";
 import { useRouter } from "next/router";
 import { ThirdPartyLogin } from "..";
+import { TypeSelector } from "../Register/components/TypeSelector";
 
 const schema = yup
   .object()
@@ -41,6 +46,9 @@ const schema = yup
   .required();
 
 export const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSocialData, setHasSocialData] = useState(false);
+  const [selectUserType, setSelectUserType] = useState(false);
   const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -74,6 +82,38 @@ export const Login = () => {
         });
       });
   };
+
+  if (isLoading || hasSocialData) {
+    return (
+      <Flex
+        minH={"100vh"}
+        align={"center"}
+        justify={"center"}
+        bg={useColorModeValue("gray.50", "gray.800")}
+      >
+        <Alert
+          status="info"
+          variant="subtle"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          height="200px"
+          maxW={"lg"}
+        >
+          <AlertIcon boxSize="40px" mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize="lg">
+            You are in process of login with Google
+          </AlertTitle>
+          <AlertDescription maxWidth="sm">Please wait...</AlertDescription>
+        </Alert>
+      </Flex>
+    );
+  }
+
+  if (selectUserType) {
+    return <TypeSelector />;
+  }
 
   return (
     <Flex
@@ -159,7 +199,10 @@ export const Login = () => {
               </Text>
             </Stack>
             <Stack pt={6}>
-              <ThirdPartyLogin />
+              <ThirdPartyLogin 
+                  onLoading={setIsLoading}
+                  onHasData={setHasSocialData}
+                  onSelectType={setSelectUserType}/>
             </Stack>
           </Stack>
         </Box>

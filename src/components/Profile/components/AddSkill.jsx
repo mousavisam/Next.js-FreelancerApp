@@ -2,13 +2,7 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
   Modal,
-  Drawer,
-  IconButton,
-  DrawerOverlay,
-  DrawerHeader,
-  DrawerBody,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -17,27 +11,32 @@ import {
   ModalFooter,
   useDisclosure,
   useToast,
-  Select,
+  Select as ChakraSelect,
 } from "@chakra-ui/react";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { skillApi } from "@/services";
+import Select from "react-select";
+import { useEffect, useState } from "react";
+import { isEmpty } from "lodash";
 
 const schema = yup
 
   .object()
   .shape({
-    skill_name: yup.string().required(),
+    skill_name: yup.object().required(),
     level: yup.string().required(),
   })
   .required();
 
-export const AddSkill = ({ callback }) => {
+export const AddSkill = ({ callback, categories }) => {
+  const [skills, setSkills] = useState([]);
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
   const toast = useToast();
@@ -46,7 +45,7 @@ export const AddSkill = ({ callback }) => {
 
   const onSubmit = (values) => {
     skillApi
-      .post(values)
+      .post({ ...values, skill_name: values.skill_name.value })
       .then((res) => {
         console.info({ res });
         toast({
@@ -71,6 +70,10 @@ export const AddSkill = ({ callback }) => {
       });
   };
 
+  useEffect(() => {
+    setSkills(categories);
+  }, [categories]);
+
   return (
     <>
       <Button colorScheme="blue" onClick={onOpen}>
@@ -83,36 +86,39 @@ export const AddSkill = ({ callback }) => {
           <ModalHeader>Add Skill</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-          <FormControl
-              mt={4}
-              id="Search"
-              isInvalid={errors.skill_name}
-            >          
-              <FormLabel>Search</FormLabel>
-              <Input placeholder="Search"  />
-              
-            </FormControl>
-
-
             <FormControl
-              mt={4}
               id="skill_name"
-              isRequired
               isInvalid={errors.skill_name}
-            >          
+              isRequired
+            >
               <FormLabel>Skill Name</FormLabel>
-              <Input placeholder="Skill Name" {...register("skill_name")} />
+
+              <Controller
+                name="skill_name"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select
+                    options={skills.map((item) => ({
+                      value: item.title,
+                      label: item.title,
+                    }))}
+                    isLoading={isEmpty(skills)}
+                    placeholder="Skill Name"
+                    {...field}
+                  />
+                )}
+              />
             </FormControl>
 
             <FormControl mt={4} id="level" isInvalid={errors.level} isRequired>
-                <FormLabel>Select level</FormLabel>
-                <Select placeholder="Select option" {...register("level")}>
-                  <option value="JUNIOR">Junior</option>
-                  <option value="MID_LEVEL">Mid Level</option>
-                  <option value="SENIOR">Senior</option>
-                </Select>
-              </FormControl>
-
+              <FormLabel>Select level</FormLabel>
+              <ChakraSelect placeholder="Select option" {...register("level")}>
+                <option value="JUNIOR">Junior</option>
+                <option value="MID_LEVEL">Mid Level</option>
+                <option value="SENIOR">Senior</option>
+              </ChakraSelect>
+            </FormControl>
           </ModalBody>
 
           <ModalFooter>

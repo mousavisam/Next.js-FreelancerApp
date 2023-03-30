@@ -1,4 +1,4 @@
-import { certificateApi, userApi, skillApi } from "@/services";
+import { certificateApi, userApi, skillApi, categoryApi } from "@/services";
 import {
   Grid,
   Box,
@@ -38,18 +38,33 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { AddCertificate } from "./components/AddCertificate";
 import { AddSkill } from "./components/AddSkill";
 
 export const Profile = () => {
+  const router = useRouter();
   const [userData, setUserData] = useState({});
   const [certificates, setCertificates] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const handleGetProfile = useCallback(() => {
-    userApi.profile().then((res) => {
-      setUserData(res?.data || {});
+    userApi
+      .profile()
+      .then((res) => {
+        setUserData(res?.data || {});
+      })
+      .catch(() => {
+        router.push("/login");
+      });
+  }, []);
+
+  const handleGetCategories = useCallback(() => {
+    categoryApi.getAll().then((res) => {
+      console.info({ res });
+      setCategories(res?.data || []);
     });
   }, []);
 
@@ -73,6 +88,10 @@ export const Profile = () => {
   useEffect(() => {
     handleGetCertificates();
   }, [handleGetCertificates]);
+
+  useEffect(() => {
+    handleGetCategories();
+  }, [handleGetCategories]);
 
   useEffect(() => {
     handleGetSkills();
@@ -161,7 +180,7 @@ export const Profile = () => {
           </Box>
           <br></br>
           <ButtonGroup variant="outline" spacing="6">
-            <AddSkill callback={handleGetSkills} />
+            <AddSkill callback={handleGetSkills} categories={categories} />
           </ButtonGroup>
           <br></br>
           <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
