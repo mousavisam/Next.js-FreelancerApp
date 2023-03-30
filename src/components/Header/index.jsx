@@ -7,12 +7,7 @@ import {
   Button,
   Avatar,
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  Text,
-  AbsoluteCenter,
+
   Menu,
   Drawer,
   useDisclosure,
@@ -38,6 +33,8 @@ import { useState } from "react";
 import {
   EmailIcon,
   Icon,
+  ChatIcon,
+  SearchIcon,
   QuestionIcon,
   SettingsIcon,
   StarIcon,
@@ -96,11 +93,13 @@ export const Header = () => {
             Browser
           </Button>
           <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerBody>
-                <DrawerBody>
+            <DrawerOverlay/>
+            <DrawerContent >
+              <DrawerBody >
+                <DrawerBody >
+                  
                   <Input placeholder="Search" />
+           
                 </DrawerBody>
               </DrawerBody>
             </DrawerContent>
@@ -124,15 +123,17 @@ export const Header = () => {
             Group
           </Button>
         </ButtonGroup>
+        
 
         <Box style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          <IconButton
-            position="relative"
-            right="20px"
-            style={{ background: "white", color: "grey" }}
-            fontSize="30px"
-            icon={<EmailIcon />}
-          />
+         <IconButton
+         position="relative"
+         right="20px"
+  variant="outline"
+  colorScheme="blue"
+  aria-label="Message"
+  icon={<ChatIcon />}
+/>
           <Button
             position="relative"
             right="20px"
@@ -142,6 +143,7 @@ export const Header = () => {
           >
             Post Project
           </Button>
+   
 
           <IconButton
             position="relative"
