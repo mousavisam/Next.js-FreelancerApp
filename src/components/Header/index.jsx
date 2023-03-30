@@ -14,6 +14,13 @@ import {
   Text,
   AbsoluteCenter,
   Menu,
+  Drawer,
+  useDisclosure,
+  Input,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerHeader,
+  DrawerBody,
   MenuButton,
   Popover,
   PopoverTrigger,
@@ -27,6 +34,7 @@ import {
   Center,
   Grid,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import {
   EmailIcon,
   Icon,
@@ -35,12 +43,13 @@ import {
   StarIcon,
 } from "@chakra-ui/icons";
 //import Icon from "@mdi/react";
-import { mdiLogout } from "@mdi/js";
+
 import Link from "next/link";
 import { clearStorage } from "@/utils/storage";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
+import React from "react";
 
 export const Header = () => {
   const router = useRouter();
@@ -51,7 +60,8 @@ export const Header = () => {
       router.replace("/");
     });
   };
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [placement, setPlacement] = React.useState("top");
   return (
     <Stack>
       <Box
@@ -76,6 +86,7 @@ export const Header = () => {
           style={{ flex: "40%" }}
         >
           <Button
+            onClick={onOpen}
             style={{
               backgroundColor: "white",
               color: "black",
@@ -84,6 +95,16 @@ export const Header = () => {
           >
             Browser
           </Button>
+          <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerBody>
+                <DrawerBody>
+                  <Input placeholder="Search" />
+                </DrawerBody>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
           <Button
             style={{
               backgroundColor: "white",
