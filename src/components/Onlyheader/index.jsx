@@ -54,7 +54,7 @@ import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
 import React from "react";
 
-export const Header = () => {
+export const Onlyheader = () => {
   const router = useRouter();
   const { data: socialData } = useSession();
 
@@ -214,44 +214,6 @@ export const Header = () => {
             </MenuList>
           </Menu>
         </Box>
-      </Box>
-      <Box
-        style={{
-          backgroundColor: "#C6F6D5",
-          padding: "5px 10px",
-          margin: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <ButtonGroup
-          size="md"
-          isAttached
-          variant="outline"
-          style={{ outlineColor: "black", width: "70%" }}
-        >
-          <Button
-            as={Link}
-            href="/dashboard"
-            colorScheme="blue"
-            onClick={() => {}}
-          >
-            Dashboard
-          </Button>
-          <Button colorScheme="blue">Lists</Button>
-          <Button
-            //   as={Link}
-            //   href="/project"
-            colorScheme="blue"
-            //   onClick={() => {}}
-          >
-            Task Lists
-          </Button>
-          <Button colorScheme="blue">My Project</Button>
-          <Button colorScheme="blue">Feedback</Button>
-          <Button colorScheme="blue">Inbox</Button>
-        </ButtonGroup>
       </Box>
     </Stack>
   );

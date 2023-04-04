@@ -8,3 +8,7 @@ export * from "./Project";
 export * from "./Faq";
 export * from "./ThirdPartyLogin";
 export * from "./AuthLayout";
+export * from "./InviteFriends";
+export * from "./Settings";
+export * from "./Onlyheader";
+export * from "./HeaderLayout";
