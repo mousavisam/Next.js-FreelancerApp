@@ -12,3 +12,5 @@ export * from "./InviteFriends";
 export * from "./Settings";
 export * from "./Onlyheader";
 export * from "./HeaderLayout";
+export * from "./MyProject";
+export * from "./Inbox";

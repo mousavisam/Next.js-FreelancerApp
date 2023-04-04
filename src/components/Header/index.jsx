@@ -159,6 +159,8 @@ export const Header = () => {
             position="relative"
             right="20px"
             variant="outline"
+            as={Link}
+            href="/inbox"
             colorScheme="blue"
             aria-label="Message"
             icon={<ChatIcon />}
@@ -248,9 +250,13 @@ export const Header = () => {
           >
             Task Lists
           </Button>
-          <Button colorScheme="blue">My Project</Button>
+          <Button colorScheme="blue" as={Link} href="/myproject">
+            My Project
+          </Button>
           <Button colorScheme="blue">Feedback</Button>
-          <Button colorScheme="blue">Inbox</Button>
+          <Button colorScheme="blue" as={Link} href="/inbox">
+            Inbox
+          </Button>
         </ButtonGroup>
       </Box>
     </Stack>

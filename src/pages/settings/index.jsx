@@ -1,8 +1,4 @@
-import {
-  AuthLayout,
-  HeaderLayout,
-  Settings as SettingsUI,
-} from "../../components";
+import { HeaderLayout, Settings as SettingsUI } from "../../components";
 
 const Settings = () => {
   return (
