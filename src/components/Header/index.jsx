@@ -82,8 +82,7 @@ export const Header = () => {
           fontSize="20px"
           w="120px"
           flex="10%"
-          as={Link}
-          href="/dashboard"
+          
         >
           Skill Tree
         </Button>
@@ -232,24 +231,36 @@ export const Header = () => {
           style={{ outlineColor: "black", width: "70%" }}
         >
           <Button
+            
+            colorScheme="blue"
             as={Link}
             href="/dashboard"
-            colorScheme="blue"
-            onClick={() => {}}
           >
             Dashboard
           </Button>
-          <Button colorScheme="blue">Lists</Button>
+          <Button 
+            colorScheme="blue" 
+            as={Link}
+            href="/lists">
+              Lists
+          </Button>
           <Button
-            //   as={Link}
-            //   href="/project"
             colorScheme="blue"
-            //   onClick={() => {}}
+            as={Link}
+            href="/tasklists"
           >
             Task Lists
           </Button>
-          <Button colorScheme="blue">My Project</Button>
-          <Button colorScheme="blue">Feedback</Button>
+          <Button 
+            colorScheme="blue">
+              My Project
+          </Button>
+          <Button 
+          as={Link}
+          href="/feedback" 
+          colorScheme="blue">
+            Feedback
+          </Button>
           <Button colorScheme="blue">Inbox</Button>
         </ButtonGroup>
       </Box>
