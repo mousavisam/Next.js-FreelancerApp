@@ -51,6 +51,7 @@ import Link from "next/link";
 import { clearStorage } from "@/utils/storage";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
+
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -82,7 +83,6 @@ export const Header = () => {
           fontSize="20px"
           w="120px"
           flex="10%"
-          
         >
           Skill Tree
         </Button>
@@ -232,33 +232,24 @@ export const Header = () => {
           variant="outline"
           style={{ outlineColor: "black", width: "70%" }}
         >
-          <Button
-            
-            colorScheme="blue"
-            as={Link}
-            href="/dashboard"
-          >
+          <Button colorScheme="blue" as={Link} href="/dashboard">
             Dashboard
           </Button>
-          <Button 
-            colorScheme="blue" 
-            as={Link}
-            href="/lists">
-              Lists
+          <Button colorScheme="blue" as={Link} href="/lists">
+            Lists
           </Button>
-          <Button
-            colorScheme="blue"
-            as={Link}
-            href="/tasklists"
-          >
+          <Button colorScheme="blue" as={Link} href="/tasklists">
             Task Lists
           </Button>
-          <Button colorScheme="blue"  as={Link}
-            href="/myproject">My Project</Button>
-          <Button colorScheme="blue"  as={Link}
-            href="/feedback">Feedback</Button>
-          <Button colorScheme="blue"  as={Link}
-            href="/inbox">Inbox</Button>
+          <Button colorScheme="blue" as={Link} href="/myproject">
+            My Project
+          </Button>
+          <Button colorScheme="blue" as={Link} href="/feedback">
+            Feedback
+          </Button>
+          <Button colorScheme="blue" as={Link} href="/inbox">
+            Inbox
+          </Button>
         </ButtonGroup>
       </Box>
     </Stack>
