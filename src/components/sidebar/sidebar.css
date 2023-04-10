@@ -1,0 +1,41 @@
+.user-list-container {
+  overflow: auto;
+  overflow-x: hidden;
+  height: 80vh;
+  background-color: rgb(36, 34, 34);
+}
+.user-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+.user-list-container::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  
+}
+.chat-online {
+  color: #34ce57;
+  font-weight: bold;
+}
+
+.chat-offline {
+  color: #e4606d;
+}
+
+.list-group-item {
+  padding: 0.4rem 1.25rem;
+  font-size: 10pt;
+}
+
+.list-group-item-action:focus,
+.list-group-item-action:hover,
+.active-chat {
+  background-color: #dbaf1c;
+}
+
+.active-chat {
+  color: rgb(36, 34, 34);
+  font-weight: bold;
+}
+.active-chat:hover {
+  color: white;
+}
+

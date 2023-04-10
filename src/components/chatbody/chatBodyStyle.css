@@ -1,0 +1,116 @@
+#chat-message-input {
+  margin-right: -5px;
+  margin-left: -5px;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  transition: all 0.5s;
+  background-color: rgb(25, 26, 6);
+  box-shadow: 0px 0px 40px #dbaf1c;
+  color: aliceblue;
+
+}
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 138px);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  transition: all 0.5s;
+  background-color: rgb(25, 26, 6);
+  color: #131212;
+}
+.chat-message-left,
+.chat-message-right {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.chat-message-left {
+  margin-right: auto;
+  background-color: rgb(227, 228, 222);
+}
+.chat-message-right {
+  flex-direction: row-reverse;
+  margin-left: auto;
+  background-color: rgb(25, 26, 6);
+}
+
+/* typing bubble */
+.chat-bubble {
+  background-color: #dbaf1c;
+  padding: 16px 28px;
+  -webkit-border-radius: 20px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius: 20px;
+  -moz-border-radius-bottomleft: 2px;
+  border-radius: 20px;
+  border-bottom-left-radius: 2px;
+  display: inline-block;
+  position: relative;
+
+}
+
+.typing {
+  align-items: center;
+  display: flex;
+  height: 17px;
+  justify-content: center;
+}
+
+.typing .dot {
+  animation: mercuryTypingAnimation 1s infinite ease-in-out;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  height: 7px;
+  margin-right: 4px;
+  vertical-align: middle;
+  width: 7px;
+  display: inline-block;
+}
+
+.typing .dot:nth-child(1) {
+  animation-delay: 100ms;
+}
+.typing .dot:nth-child(2) {
+  animation-delay: 100ms;
+}
+.typing .dot:nth-child(3) {
+  animation-delay: 100ms;
+}
+.typing .dot:last-child {
+  margin-right: 0;
+}
+
+@keyframes mercuryTypingAnimation {
+  0% {
+    transform: translateY(0px);
+    background-color: #ffc003;
+  }
+  28% {
+    transform: translateY(-7px);
+    background-color: #e4bf52;
+  }
+  44% {
+    transform: translateY(0px);
+    background-color: #dac587;
+  }
+}
+.chat-bubble:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #dbaf1c;
+  -webkit-border-radius: 20px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius: 20px;
+  -moz-border-radius-bottomleft: 2px;
+  border-radius: 20px;
+  border-bottom-left-radius: 2px;
+  z-index: -1;  
+}
