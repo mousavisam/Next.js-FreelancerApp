@@ -1,11 +1,16 @@
-
-import { AuthLayout, Dashboard as DashboardUI } from "../../components";
+import { getStorageType } from "@/utils/storage";
+import {
+  AuthLayout,
+  Dashboard as DashboardUI,
+  RelatedTasks,
+} from "../../components";
+import { USER_TYPES } from "@/utils/constant";
 
 const Dashboard = () => {
+  const isFreelancer = getStorageType() === USER_TYPES.FREELANCER;
+
   return (
-    <AuthLayout>
-      <DashboardUI />
-    </AuthLayout>
+    <AuthLayout>{isFreelancer ? <RelatedTasks /> : <DashboardUI />}</AuthLayout>
   );
 };
 

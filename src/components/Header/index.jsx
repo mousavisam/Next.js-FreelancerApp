@@ -101,7 +101,7 @@ export const Header = () => {
               borderColor: "black",
             }}
           >
-            Browser
+            Browse
           </Button>
           <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />

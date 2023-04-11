@@ -1,0 +1,4 @@
+export const USER_TYPES = {
+  FREELANCER: "FREELANCER",
+  CLIENT: "CLIENT",
+};

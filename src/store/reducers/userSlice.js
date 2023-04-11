@@ -5,6 +5,7 @@ export const initialState = {
   email: "",
   access_token: "",
   refresh_token: "",
+  user_type: "",
 };
 
 const userSlice = createSlice({

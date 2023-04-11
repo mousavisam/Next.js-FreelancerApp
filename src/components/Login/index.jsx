@@ -29,7 +29,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 
 import { setUser } from "../../store/reducers/userSlice";
-import { setStorageToken } from "@/utils/storage";
+import { setStorageToken, setStorageType } from "@/utils/storage";
 import { useRouter } from "next/router";
 import { ThirdPartyLogin } from "..";
 import { TypeSelector } from "../Register/components/TypeSelector";
@@ -64,10 +64,16 @@ export const Login = () => {
       .login(values)
       .then((res) => {
         console.info({ res });
-        const { access_token, refresh_token } = res?.data;
+        const { access_token, refresh_token, user_type } = res?.data;
         dispatch(
-          setUser({ username: values.username, access_token, refresh_token })
+          setUser({
+            username: values.username,
+            access_token,
+            refresh_token,
+            user_type,
+          })
         );
+        setStorageType(user_type);
         setStorageToken(access_token);
         router.push("/profile");
       })
@@ -199,10 +205,11 @@ export const Login = () => {
               </Text>
             </Stack>
             <Stack pt={6}>
-              <ThirdPartyLogin 
-                  onLoading={setIsLoading}
-                  onHasData={setHasSocialData}
-                  onSelectType={setSelectUserType}/>
+              <ThirdPartyLogin
+                onLoading={setIsLoading}
+                onHasData={setHasSocialData}
+                onSelectType={setSelectUserType}
+              />
             </Stack>
           </Stack>
         </Box>

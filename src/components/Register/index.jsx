@@ -42,6 +42,7 @@ const schema = yup
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
     type: yup.string().required(),
+    referrer: yup.string()
   })
   .required();
 
@@ -211,6 +212,10 @@ export const Register = () => {
                   <option value="FREELANCER">Freelancer</option>
                   <option value="CLIENT">Client</option>
                 </Select>
+              </FormControl>
+              <FormControl id="referrer" isInvalid={errors.referrer}>
+                <FormLabel>Referrer username</FormLabel>
+                <Input type="text" {...register("referrer")} />
               </FormControl>
 
               <Stack spacing={10} pt={2}>
