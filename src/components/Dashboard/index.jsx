@@ -129,7 +129,7 @@ export const Dashboard = () => {
             <Text mt={4}></Text>
           </Box>
         </GridItem>
-        <GridItem pl="2" bg="pink.300" area={"nav"}>
+        <GridItem pl="2" area={"nav"}>
           <Chart
             type="line"
             width={490}
