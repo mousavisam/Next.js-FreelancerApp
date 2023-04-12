@@ -53,6 +53,7 @@ import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
 import React from "react";
+import { Browse } from "..";
 
 export const Onlyheader = () => {
   const router = useRouter();
@@ -94,26 +95,7 @@ export const Onlyheader = () => {
           variant="outline"
           style={{ flex: "40%" }}
         >
-          <Button
-            onClick={onOpen}
-            style={{
-              backgroundColor: "white",
-              color: "black",
-              borderColor: "black",
-            }}
-          >
-            Browse
-          </Button>
-          <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerBody>
-                <DrawerBody>
-                  <Input placeholder="Search" />
-                </DrawerBody>
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
+          <Browse />
           <Popover>
             <PopoverTrigger>
               <Button

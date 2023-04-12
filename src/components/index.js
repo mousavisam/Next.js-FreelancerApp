@@ -18,3 +18,5 @@ export * from "./Inbox";
 export * from "./MyProject";
 export * from "./Lists";
 export * from "./RelatedTasks";
+export * from "./Browse";
+export * from "./Proposals";

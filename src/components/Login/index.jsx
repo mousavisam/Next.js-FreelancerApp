@@ -29,7 +29,11 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 
 import { setUser } from "../../store/reducers/userSlice";
-import { setStorageToken, setStorageType } from "@/utils/storage";
+import {
+  setStorageToken,
+  setStorageType,
+  setStorageUsername,
+} from "@/utils/storage";
 import { useRouter } from "next/router";
 import { ThirdPartyLogin } from "..";
 import { TypeSelector } from "../Register/components/TypeSelector";
@@ -74,6 +78,7 @@ export const Login = () => {
           })
         );
         setStorageType(user_type);
+        setStorageUsername(values.username);
         setStorageToken(access_token);
         router.push("/profile");
       })

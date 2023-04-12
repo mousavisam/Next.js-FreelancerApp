@@ -172,8 +172,8 @@ export const Profile = () => {
           <Box></Box>
           <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="lg">
             <Heading fontSize="xl">Skills</Heading>
-            {skills.map((skill) => (
-              <Text key={skill.category} mt={4}>
+            {skills.map((skill, idx) => (
+              <Text key={skill.category + idx} mt={4}>
                 {skill.category}
               </Text>
             ))}

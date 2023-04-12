@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { taskApi } from "@/services";
+import { proposalApi } from "@/services";
 import {
   Box,
   Stack,
@@ -14,9 +14,12 @@ import {
   Badge,
   Avatar,
   useDisclosure,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { SendProposal } from "./components/SendProposal";
+import { MdAccessTime, MdOutlineAttachMoney } from "react-icons/md";
+import { ChangeProposalStatus } from "./components/ChangeProposalStatus";
 
 const BADGE_COLORS = [
   "red",
@@ -37,22 +40,21 @@ const BADGE_COLORS = [
   "telegram",
 ];
 
-export const RelatedTasks = () => {
-  const [tasks, setTasks] = useState([]);
+export const Proposals = () => {
+  const [proposals, setProposals] = useState([]);
   const [sendProposalId, setSendProposalId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleSendProposal = (id) => {
+  const handleAction = (id) => {
     setSendProposalId(id);
     onOpen();
   };
 
-  const handleGetRelatedTasks = useCallback(() => {
-    taskApi
-      .getRelatedTasks()
+  const handleGetProposals = useCallback(() => {
+    proposalApi
+      .get()
       .then((res) => {
-        console.info({ res });
-        setTasks(res?.data || []);
+        setProposals(res?.data || []);
       })
       .catch((err) => {
         console.error(err);
@@ -60,70 +62,70 @@ export const RelatedTasks = () => {
   }, []);
 
   useEffect(() => {
-    handleGetRelatedTasks();
-  }, [handleGetRelatedTasks]);
+    handleGetProposals();
+  }, [handleGetProposals]);
 
   return (
     <Box p="10px">
       <Text fontSize="3xl" p="10px">
-        Related Tasks
+        Proposals
       </Text>
-      {tasks.map((task, idx) => (
+      {proposals.map((proposal, idx) => (
         <Card
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
           variant="outline"
           mb="10px"
           w="100%"
-          key={task.creation_time + task.id}
+          key={proposal.creation_time + proposal.id}
         >
           <Image
             objectFit="cover"
             maxW={{ base: "100%", sm: "200px" }}
             src={`https://picsum.photos/id/${idx}/200`}
-            alt={task.title}
+            alt={proposal.title}
           />
 
           <Stack w="100%">
             <CardBody>
               <Flex alignItems="center" gap="10px">
-                <Link href={`/profile/${task.client}`}>
-                  <Avatar name={task.client} />
-                </Link>
-                <Heading size="md">{task.title}</Heading>
+                <Heading size="md">{proposal.task}</Heading>
                 <Badge ml="1" fontSize="0.8em" colorScheme="green">
-                  {task.status}
+                  {proposal.status}
                 </Badge>
               </Flex>
 
-              <Text py="2">{task.description}</Text>
+              <Text py="2">{proposal.description}</Text>
+
+              <List spacing={3}>
+                <ListItem display="flex" alignItems="center">
+                  <ListIcon as={MdAccessTime} color="green.500" />
+                  <Text fontWeight="bold">Delivery time in day: </Text>
+                  <Text ml="10px">{proposal.delivery_time_in_day}</Text>
+                </ListItem>
+                <ListItem display="flex" alignItems="center">
+                  <ListIcon as={MdOutlineAttachMoney} color="green.500" />
+                  <Text fontWeight="bold">Payment Amount: </Text>
+                  <Text ml="10px">{proposal.payment_amount}</Text>
+                </ListItem>
+              </List>
             </CardBody>
 
             <CardFooter w="100%">
               <Flex w="100%" alignItems="center" justifyContent="space-between">
-                <Stack direction="row">
-                  {task.tags.map((tag, tagIdx) => (
-                    <Badge
-                      key={tagIdx}
-                      colorScheme={BADGE_COLORS[Math.floor(Math.random() * 16)]}
-                    >
-                      {tag.title}
-                    </Badge>
-                  ))}
-                </Stack>
-
                 <Button
                   variant="solid"
                   colorScheme="blue"
-                  onClick={() => handleSendProposal(task.id)}
+                  onClick={() => handleAction(proposal.id)}
                 >
-                  Send Proposal
+                  Action
                 </Button>
               </Flex>
-              <SendProposal
+              <ChangeProposalStatus
                 isOpen={isOpen}
                 onClose={onClose}
                 id={sendProposalId}
+                callback={handleGetProposals}
               />
             </CardFooter>
           </Stack>

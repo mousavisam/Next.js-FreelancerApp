@@ -33,6 +33,7 @@ const schema = yup
     deliver_time: yup.string().required(),
     description: yup.string().required(),
     service_category: yup.object().required(),
+    tags: yup.array().of(yup.object()).required(),
   })
   .required();
 
@@ -55,8 +56,13 @@ export const Project = () => {
   }, []);
 
   const onSubmit = (values) => {
+    const tags = values.tags.map((tag) => tag.value);
     taskApi
-      .post({ ...values, service_category: values.service_category.value })
+      .post({
+        ...values,
+        tags,
+        service_category: values.service_category.value,
+      })
       .then((res) => {
         setIsAdded(true);
       })
@@ -180,6 +186,28 @@ export const Project = () => {
                       }))}
                       isLoading={isEmpty(categories)}
                       placeholder="Service Category"
+                      {...field}
+                    />
+                  )}
+                />
+              </FormControl>
+
+              <FormControl id="tags" isInvalid={errors.tags} isRequired>
+                <FormLabel>Tags</FormLabel>
+
+                <Controller
+                  name="tags"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select
+                      options={categories.map((item) => ({
+                        value: item.title,
+                        label: item.title,
+                      }))}
+                      isMulti
+                      isLoading={isEmpty(categories)}
+                      placeholder="Tags"
                       {...field}
                     />
                   )}

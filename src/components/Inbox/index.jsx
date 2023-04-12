@@ -1,80 +1,55 @@
-import {
-  Grid,
-  GridItem,
-  Flex,
-  Box,
-  Heading,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  InputGroup,
-  Spacer,
-  ButtonGroup,
-  Button,
-  InputLeftElement,
-  Wrap,
-  Input,
-} from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
-import { FiMenu } from "react-icons/fi";
+import { Flex, Divider } from "@chakra-ui/react";
+import React, { useState, useCallback, useEffect } from "react";
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import { getStorageUsername } from "@/utils/storage";
+
+import { Footer } from "./Footer";
+import { Messages } from "./Messages";
+
+const SOCKET_URL = `ws://127.0.0.1:8000/ws/`;
+
 export const Inbox = () => {
+  const [socketUrl, setSocketUrl] = useState(SOCKET_URL);
+  const [messageHistory, setMessageHistory] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+
+  const handleSendMessage = useCallback(() => {
+    sendMessage(inputMessage);
+  }, []);
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastMessage));
+    }
+  }, [lastMessage, setMessageHistory]);
+
+  useEffect(() => {
+    setSocketUrl(SOCKET_URL + getStorageUsername());
+  }, []);
+
   return (
-    <Grid
-      templateAreas={`"header main"
-                  "nav main"
-                  "nav footer"`}
-      gridTemplateRows={"50px 1fr 30px"}
-      gridTemplateColumns={"250px 1fr"}
-      h="80vh"
-      gap="1"
-      color="blackAlpha.700"
-      fontWeight="bold"
-    >
-      <GridItem pl="2" area={"header"} border="1px" borderColor="Black">
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<Search2Icon color="gray.300" />}
-          />
-          <Input placeholder="Search projects" />
-        </InputGroup>
-      </GridItem>
-      <GridItem pl="2" area={"nav"} border="1px" borderColor="Black">
-        no message yet
-      </GridItem>
-      <GridItem pl="2" area={"main"} border="1px" borderColor="Black">
-        <Flex
-          minWidth="max-content"
-          alignItems="center"
-          gap="2"
-          border="1px"
-          borderColor="Black"
-        >
-          <Box p="2">
-            <Heading size="md">User Name</Heading>
-          </Box>
-          <Spacer />
-          <ButtonGroup gap="2">
-            <Menu>
-              <MenuButton as={Button}>
-                <FiMenu />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>View Profile</MenuItem>
-                <MenuItem>Block</MenuItem>
-              </MenuList>
-            </Menu>
-          </ButtonGroup>
-        </Flex>
-      </GridItem>
-      <GridItem pl="2" area={"footer"} border="1px" borderColor="Black">
-        text
-      </GridItem>
-    </Grid>
+    <Flex w="100%" h="100vh" justify="center" align="center">
+      <Flex w={["100%", "100%", "40%"]} h="90%" flexDir="column">
+        {/* <Header />
+        <Divider w="100%" borderBottomWidth="3px" color="black" mt="5" /> */}
+        <Messages messages={messageHistory} />
+        <Divider w="100%" borderBottomWidth="3px" color="black" mt="5" />
+        <Footer
+          inputMessage={inputMessage}
+          setInputMessage={setInputMessage}
+          handleSendMessage={handleSendMessage}
+        />
+      </Flex>
+    </Flex>
   );
 };

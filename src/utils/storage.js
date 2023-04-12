@@ -1,14 +1,23 @@
 const STORAGE_KEYS = {
-  TOKEN: "token",
   TYPE: "type",
+  TOKEN: "token",
+  USERNAME: "username",
 };
 
 export function setStorageToken(token) {
   window.localStorage.setItem(STORAGE_KEYS.TOKEN, JSON.stringify(token));
 }
 
+export function setStorageUsername(username) {
+  window.localStorage.setItem(STORAGE_KEYS.USERNAME, username);
+}
+
 export function getStorageToken() {
   return JSON.parse(window.localStorage.getItem(STORAGE_KEYS.TOKEN));
+}
+
+export function getStorageUsername() {
+  return window.localStorage.getItem(STORAGE_KEYS.USERNAME);
 }
 
 export function hasStorageToken() {
@@ -16,11 +25,11 @@ export function hasStorageToken() {
 }
 
 export function setStorageType(type) {
-  window.localStorage.setItem(STORAGE_KEYS.TYPE, JSON.stringify(type));
+  window.localStorage.setItem(STORAGE_KEYS.TYPE, type);
 }
 
 export function getStorageType() {
-  return JSON.parse(window.localStorage.getItem(STORAGE_KEYS.TYPE));
+  return window.localStorage.getItem(STORAGE_KEYS.TYPE);
 }
 
 export function clearStorage() {
