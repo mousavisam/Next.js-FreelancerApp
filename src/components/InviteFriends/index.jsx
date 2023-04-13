@@ -7,7 +7,38 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
+import { userApi } from "../../services";
+
 export const InviteFriends = () => {
+  const toast = useToast();
+  const [email, setEmail] = useState("");
+
+  const handleSendInvite = () => {
+    userApi
+      .invite({ recipient_email: email })
+      .then(() => {
+        toast({
+          title: "Sent!",
+          description: "Invitation has been sent!",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({
+          title: "Error!",
+          description: "Something went wrong, please try again!",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  };
+
   return (
     <>
       <VStack spacing={5} align="stretch">
@@ -33,10 +64,14 @@ export const InviteFriends = () => {
               placeholder="Enter the MailId"
               size="lg"
               style={{ height: "100px" }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Container>
           <Container maxW="80px">
-            <Button>Send Invite</Button>
+            <Button disabled={!email} onClick={handleSendInvite}>
+              Send Invite
+            </Button>
           </Container>
         </VStack>
       </VStack>

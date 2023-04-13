@@ -25,6 +25,9 @@ const user = {
   getAll() {
     return ApiClient.get("/auth/register");
   },
+  invite(data) {
+    return ApiClient.post("/invite/", data);
+  },
 };
 
 export default user;
