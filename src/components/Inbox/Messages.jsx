@@ -8,6 +8,15 @@ export const Messages = ({ messages }) => {
     return <div ref={elementRef} />;
   };
 
+  const avatar = (idx) => {
+    const first =
+      "https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light";
+    const second = "https://i.pravatar.cc/150?img=2";
+
+    if (idx % 2 === 0) return first;
+    return second;
+  };
+
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => {
@@ -31,7 +40,7 @@ export const Messages = ({ messages }) => {
             <Flex key={index} w="100%">
               <Avatar
                 name="Computer"
-                src="https://i.pravatar.cc/150"
+                src={avatar(index)}
                 bg="blue.300"
               ></Avatar>
               <Flex
