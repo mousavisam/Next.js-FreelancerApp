@@ -45,31 +45,40 @@ import {
   SettingsIcon,
   StarIcon,
 } from "@chakra-ui/icons";
-//import Icon from "@mdi/react";
 
 import Link from "next/link";
-import { clearStorage } from "@/utils/storage";
+import { clearStorage, getStorageRefreshToken } from "@/utils/storage";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 
 import { useRouter } from "next/router";
 import React from "react";
 import { Browse } from "..";
+import { userApi } from "@/services";
 
 export const Header = () => {
   const router = useRouter();
   const { data: socialData } = useSession();
 
   const handleLogout = () => {
-    if (socialData) {
-      signOut().then(() => {
-        clearStorage();
-        router.push("/login");
+    const refreshToken = getStorageRefreshToken();
+    userApi
+      .logout({ refresh_token: refreshToken })
+      .then((res) => {
+        console.info(res);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => {
+        if (socialData) {
+          signOut().then(() => {
+            clearStorage();
+            router.push("/login");
+          });
+        } else {
+          clearStorage();
+          router.push("/login");
+        }
       });
-    } else {
-      clearStorage();
-      router.push("/login");
-    }
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = React.useState("top");
@@ -228,6 +237,9 @@ export const Header = () => {
           </Button>
           <Button colorScheme="blue" as={Link} href="/feedback">
             Feedback
+          </Button>
+          <Button colorScheme="blue" as={Link} href="/report">
+            Report
           </Button>
           <Button colorScheme="blue" as={Link} href="/inbox">
             Inbox

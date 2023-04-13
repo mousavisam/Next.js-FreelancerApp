@@ -19,6 +19,12 @@ const user = {
   profile() {
     return ApiClient.get("/profile/");
   },
+  logout(data) {
+    return ApiClient.post("/auth/logout/", data);
+  },
+  getAll() {
+    return ApiClient.get("/auth/register");
+  },
 };
 
 export default user;

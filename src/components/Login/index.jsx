@@ -30,6 +30,7 @@ import { useDispatch } from "react-redux";
 
 import { setUser } from "../../store/reducers/userSlice";
 import {
+  setStorageRefreshToken,
   setStorageToken,
   setStorageType,
   setStorageUsername,
@@ -80,6 +81,7 @@ export const Login = () => {
         setStorageType(user_type);
         setStorageUsername(values.username);
         setStorageToken(access_token);
+        setStorageRefreshToken(refresh_token);
         router.push("/profile");
       })
       .catch((error) => {
