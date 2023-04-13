@@ -6,7 +6,7 @@ import { getStorageUsername } from "@/utils/storage";
 import { Footer } from "./Footer";
 import { Messages } from "./Messages";
 
-const SOCKET_URL = `ws://skill-tree.herokuapp.com/ws/chat/lobby/`;
+const SOCKET_URL = `wss://skill-tree.herokuapp.com/ws/chat/lobby/`;
 
 export const Inbox = () => {
   const username = getStorageUsername() || "Unknown";
