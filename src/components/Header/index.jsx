@@ -47,7 +47,11 @@ import {
 } from "@chakra-ui/icons";
 
 import Link from "next/link";
-import { clearStorage, getStorageRefreshToken } from "@/utils/storage";
+import {
+  clearStorage,
+  getStorageRefreshToken,
+  getStorageUsername,
+} from "@/utils/storage";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 
@@ -58,6 +62,7 @@ import { userApi } from "@/services";
 
 export const Header = () => {
   const router = useRouter();
+  const username = getStorageUsername();
   const { data: socialData } = useSession();
 
   const handleLogout = () => {
@@ -180,7 +185,7 @@ export const Header = () => {
               as={Button}
               colorScheme="blue"
             >
-              Username
+              {username}
             </MenuButton>
             <MenuList>
               <MenuItem gap="6px" as={Link} href="/profile">

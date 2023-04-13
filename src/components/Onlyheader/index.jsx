@@ -48,7 +48,7 @@ import {
 //import Icon from "@mdi/react";
 
 import Link from "next/link";
-import { clearStorage } from "@/utils/storage";
+import { clearStorage, getStorageUsername } from "@/utils/storage";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
@@ -57,6 +57,7 @@ import { Browse } from "..";
 
 export const Onlyheader = () => {
   const router = useRouter();
+  const username = getStorageUsername();
   const { data: socialData } = useSession();
 
   const handleLogout = () => {
@@ -170,7 +171,7 @@ export const Onlyheader = () => {
               as={Button}
               colorScheme="blue"
             >
-              Username
+              {username}
             </MenuButton>
             <MenuList>
               <MenuItem gap="6px" as={Link} href="/profile">
