@@ -1,0 +1,66 @@
+#authFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#authForm {
+  width: 350px;
+  padding: 15px 25px;
+  box-shadow: 0px 0px 60px #ffffff;
+  margin: 0px 15px;
+}
+#authTitle {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 25px;
+  color: #ffffff;
+  font-size: 35px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+.authFieldContainer {
+  margin: 10px 0px;
+}
+.authField {
+  width: 100%;
+  border: 3px solid #c5c4c5;
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+.authField:focus {
+  outline: none;
+}
+.requiredFieldError {
+  margin: 0px;
+  color: rgb(252, 41, 41);
+  font-size: 9pt;
+}
+#authFormFooter {
+  text-align: center;
+  color: #898989;
+}
+#authFormFooter a {
+  color: #ffc107;
+  font-weight: bold;
+  display: inline-block;
+  text-decoration: underline;
+}
+#loginMessage {
+  text-align: center;
+  padding: 0.5rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  color: #ffc107;
+  background-color: rgb(36, 34, 34);
+  border-color: #ffeeba;
+}
+
+body {
+  background-color: rgb(36, 34, 34);
+  color: white;
+  font-family: "Roboto", sans-serif;
+  
+}
+
