@@ -29,9 +29,24 @@ import { Search2Icon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useState } from "react";
 import { userApi } from "@/services";
 import { Rating } from "./Rating";
+import { isEmpty } from "lodash";
 
 export const Feedback = () => {
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+
+  const handleFindUser = (e) => {
+    const val = e.target.value;
+    if (!val) {
+      setUser(null);
+      return;
+    }
+
+    const user = users.find((user) => user.username === val);
+    if (user) {
+      setUser(user);
+    }
+  };
 
   const handleGetUsers = useCallback(() => {
     userApi
@@ -48,6 +63,7 @@ export const Feedback = () => {
   useEffect(() => {
     handleGetUsers();
   }, [handleGetUsers]);
+
   return (
     <Box width="100%">
       <Box>
@@ -58,8 +74,11 @@ export const Feedback = () => {
           <Spacer />
         </Flex>
       </Box>
+      <Box>
+        <Input placeholder="Type a username" onChange={handleFindUser} />
+      </Box>
       <Flex width="100%" p="10px" gap="10px" justifyContent="space-between">
-        {users.map((user) => (
+        {!isEmpty(user) && (
           <Box
             p={5}
             key={user.username}
@@ -80,7 +99,7 @@ export const Feedback = () => {
               </Box>
             </Flex>
           </Box>
-        ))}
+        )}
       </Flex>
     </Box>
   );
