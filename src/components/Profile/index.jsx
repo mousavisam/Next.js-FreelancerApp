@@ -1,47 +1,24 @@
 import { certificateApi, userApi, skillApi, categoryApi } from "@/services";
 import {
-  Grid,
   Box,
-  VStack,
-  Stack,
   Button,
-  StackDivider,
-  ButtonGroup,
-  Wrap,
-  WrapItem,
-  Center,
-  Card,
   CardBody,
-  Table,
-  BillingRow,
-  billingData,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  Spacer,
   Text,
-  SimpleGrid,
-  Square,
   Heading,
-  CardFooter,
   CardHeader,
-  GridItem,
-  HStack,
   Link,
-  Icon,
   Badge,
   Flex,
   Avatar,
+  Card,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { AddCertificate } from "./components/AddCertificate";
 import { AddSkill } from "./components/AddSkill";
+import { Rating } from "./components/Rating";
 
 export const Profile = () => {
   const router = useRouter();
@@ -122,6 +99,7 @@ export const Profile = () => {
               </Badge>
             </Text>
             <Text fontSize="sm">UI Engineer</Text>
+            <Rating rate={userData.rate} />
           </Box>
         </Flex>
       </CardHeader>

@@ -1,18 +1,10 @@
-import { useRouter } from "next/router";
-import { AuthLayout, HeaderLayout, Inbox as InboxUI } from "../../components";
-import { useEffect } from "react";
+import { AuthLayout, Inbox as InboxUI } from "../../components";
 
 const Inbox = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push("https://deep.loca.lt/");
-  }, [router]);
-
   return (
-    <HeaderLayout>
+    <AuthLayout>
       <InboxUI />
-    </HeaderLayout>
+    </AuthLayout>
   );
 };
 

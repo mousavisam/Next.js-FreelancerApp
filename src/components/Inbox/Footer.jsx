@@ -2,10 +2,17 @@ import React from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 
 export const Footer = ({
+  disabled,
   inputMessage,
   setInputMessage,
   handleSendMessage,
 }) => {
+  const handleInput = (e) => {
+    const value = e.target.value;
+    console.info({ value });
+    setInputMessage(value);
+  };
+
   return (
     <Flex w="100%" mt="5">
       <Input
@@ -15,13 +22,8 @@ export const Footer = ({
         _focus={{
           border: "1px solid black",
         }}
-        onKeyPress={(e) => {
-          if (e.key === "Enter") {
-            handleSendMessage();
-          }
-        }}
         value={inputMessage}
-        onChange={(e) => setInputMessage(e.target.value)}
+        onChange={handleInput}
       />
       <Button
         bg="black"
@@ -32,8 +34,8 @@ export const Footer = ({
           color: "black",
           border: "1px solid black",
         }}
-        disabled={inputMessage.trim().length <= 0}
-        onClick={handleSendMessage}
+        disabled={inputMessage.trim().length <= 0 || disabled}
+        onClick={() => handleSendMessage(inputMessage)}
       >
         Send
       </Button>

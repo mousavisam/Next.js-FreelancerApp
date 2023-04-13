@@ -22,7 +22,7 @@ export const Messages = ({ messages }) => {
                 my="1"
                 p="3"
               >
-                <Text>{item.text}</Text>
+                <Text>{item.message}</Text>
               </Flex>
             </Flex>
           );
@@ -42,7 +42,7 @@ export const Messages = ({ messages }) => {
                 my="1"
                 p="3"
               >
-                <Text>{item.text}</Text>
+                <Text>{item.message}</Text>
               </Flex>
             </Flex>
           );

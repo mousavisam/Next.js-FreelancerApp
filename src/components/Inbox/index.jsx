@@ -6,17 +6,24 @@ import { getStorageUsername } from "@/utils/storage";
 import { Footer } from "./Footer";
 import { Messages } from "./Messages";
 
-const SOCKET_URL = `ws://127.0.0.1:8000/ws/`;
+const SOCKET_URL = `ws://skill-tree.herokuapp.com/ws/chat/lobby/`;
 
 export const Inbox = () => {
+  const username = getStorageUsername() || "Unknown";
   const [socketUrl, setSocketUrl] = useState(SOCKET_URL);
   const [messageHistory, setMessageHistory] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
 
-  const handleSendMessage = useCallback(() => {
-    sendMessage(inputMessage);
+  const handleSendMessage = useCallback((inputMessage) => {
+    console.info("handleSendMessage", inputMessage);
+    const data = {
+      message: inputMessage,
+      name: username,
+    };
+    console.info({ data });
+    sendMessage(JSON.stringify(data));
   }, []);
 
   const connectionStatus = {
@@ -27,14 +34,24 @@ export const Inbox = () => {
     [ReadyState.UNINSTANTIATED]: "Uninstantiated",
   }[readyState];
 
+  console.info({ connectionStatus });
+
   useEffect(() => {
+    console.info({ lastMessage });
     if (lastMessage !== null) {
-      setMessageHistory((prev) => prev.concat(lastMessage));
+      let message = {};
+      try {
+        message = JSON.parse(lastMessage?.data);
+      } catch (error) {
+        console.error(error);
+      }
+      console.info({ message });
+      setMessageHistory((prev) => prev.concat(message));
     }
   }, [lastMessage, setMessageHistory]);
 
   useEffect(() => {
-    setSocketUrl(SOCKET_URL + getStorageUsername());
+    setSocketUrl(SOCKET_URL);
   }, []);
 
   return (
@@ -48,6 +65,7 @@ export const Inbox = () => {
           inputMessage={inputMessage}
           setInputMessage={setInputMessage}
           handleSendMessage={handleSendMessage}
+          disabled={readyState !== ReadyState.OPEN}
         />
       </Flex>
     </Flex>
